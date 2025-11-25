@@ -19,6 +19,10 @@ onMounted(() => {
   guitarras.value = db;
   // state.guitarras = db;
 });
+const agregarCarrito = () => {
+  alert("Agregando ....");
+  // numero.value++;
+};
 </script>
 
 <template>
@@ -119,7 +123,11 @@ onMounted(() => {
 
     <div class="row mt-5">
       <!-- AQUI -->
-      <Guitarra v-for="guitarra in guitarras" v-bind:guitarra="guitarra" />
+      <Guitarra
+        v-for="guitarra in guitarras"
+        :guitarra="guitarra"
+        @agregar-carrito="agregarCarrito"
+      />
     </div>
   </main>
 
