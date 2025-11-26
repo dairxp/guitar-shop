@@ -12,6 +12,7 @@ import Footer from "./components/Footer.vue";
 
 const guitarras = ref([]);
 const carrito = ref([]);
+const guitarra = ref([]);
 // Para datos relacioandos
 // const state = reactive({
 //   guitarras,
@@ -19,6 +20,7 @@ const carrito = ref([]);
 
 onMounted(() => {
   guitarras.value = db;
+  guitarra.value = db[10];
   // state.guitarras = db;
 });
 const agregarCarrito = (guitarra) => {
@@ -47,13 +49,26 @@ const incrementarCantidad = (id) => {
   carrito.value[index].cantidad++;
   //console.log("mas ....");
 };
+
+const eliminarProducto = (id) => {
+  // console.log(id);
+  carrito.value = carrito.value.filter((producto) => producto.id !== id);
+};
+
+const vaciarCarrito = () => {
+  carrito.value = [];
+};
 </script>
 
 <template>
   <Header
     :carrito="carrito"
+    :guitarra="guitarra"
     @incrementar-cantidad="incrementarCantidad"
     @decrementar-cantidad="decrementarCantidad"
+    @agregar-carrito="agregarCarrito"
+    @eliminar-producto="eliminarProducto"
+    @vaciar-carrito="vaciarCarrito"
   />
   <main class="container-xl mt-5">
     <h2 class="text-center">Nuestra Colección</h2>
