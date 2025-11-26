@@ -22,14 +22,39 @@ onMounted(() => {
   // state.guitarras = db;
 });
 const agregarCarrito = (guitarra) => {
-  guitarra.cantidad = 1;
-  carrito.value.push(guitarra);
+  const existeCarrito = carrito.value.findIndex(
+    (producto) => producto.id === guitarra.id
+  );
+  if (existeCarrito >= 0) {
+    carrito.value[existeCarrito].cantidad++;
+  } else {
+    guitarra.cantidad = 1;
+    carrito.value.push(guitarra);
+  }
+
   // numero.value++;
+};
+
+const decrementarCantidad = (id) => {
+  const index = carrito.value.findIndex((producto) => producto.id === id);
+  if (carrito.value[index].cantidad <= 1) return;
+  carrito.value[index].cantidad--;
+  // console.log("menos ....");
+};
+const incrementarCantidad = (id) => {
+  const index = carrito.value.findIndex((producto) => producto.id === id);
+  if (carrito.value[index].cantidad >= 5) return;
+  carrito.value[index].cantidad++;
+  //console.log("mas ....");
 };
 </script>
 
 <template>
-  <Header :carrito="carrito" />
+  <Header
+    :carrito="carrito"
+    @incrementar-cantidad="incrementarCantidad"
+    @decrementar-cantidad="decrementarCantidad"
+  />
   <main class="container-xl mt-5">
     <h2 class="text-center">Nuestra Colección</h2>
 
